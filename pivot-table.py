@@ -38,11 +38,11 @@ print(all_pivot)
 
 
 
-writer_1 = pd.ExcelWriter("pivot-table.xlsx",engine='xlsxwriter')
-all_pivot.to_excel(writer_1,sheet_name="Net")
+writer_1 = pd.ExcelWriter("Summary.xlsx",engine='xlsxwriter')
+all_pivot.to_excel(writer_1,sheet_name="Summary")
 #writer_1.save()
 workbook_1 = writer_1.book
-worksheet_1 = writer_1.sheets['Net']
+worksheet_1 = writer_1.sheets['Summary']
 
 format_currency = workbook_1.add_format({
     "num_format": "##,##,#0"

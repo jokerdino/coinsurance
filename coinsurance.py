@@ -3,9 +3,9 @@ import pandas as pd
 
 # reading files from the saved directory and saving it into pandas dataframe
 
-df_1 = pd.read_csv('PP-21-22.csv')
+df_1 = pd.read_csv('premium-payable.csv')
 df_2 = pd.read_csv('commission-merge.csv')
-df_3 = pd.read_csv('tpa-21-22.csv')
+df_3 = pd.read_csv('tpa-register.csv')
 df_premium_data  = pd.read_csv('premium_data.csv')
 
 # deleting the # character from the Policy no. column
