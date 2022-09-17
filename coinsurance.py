@@ -62,15 +62,15 @@ df_combine['Admin_charges']=df_combine['PREMIUM']*1.18/100
 
 # as we now have terrorism premium and premium except terrorism, it becomes easier to accurately calculate brokerage
 # we therefore use the 100% premium data and calculate the brokerage for the coinsurer share
+df_combine["Terrorism Premium"] = df_combine['Full Terr.Premium'] * df_combine['NUM_SHARE_PCT'] / 100
+df_combine["Other than Terrorism Premium"] = df_combine['PREMIUM'] - df_combine['Terrorism Premium']
+
 df_combine['Terr brokerage']  = df_combine['Full Terr.Premium'] * 5 / 100 * df_combine['NUM_SHARE_PCT'] / 100
 df_combine['Brokerage except Terrorism'] = df_combine['Full premium'] * df_combine['Rate'] / 100 * df_combine['NUM_SHARE_PCT'] / 100
 
 # adding brokerage except terrorism and terrorism brokerage
 df_combine['Total brokerage'] = df_combine['Terr brokerage'] + df_combine['Brokerage except Terrorism']
 
-# As terrorism premium will give have a different brokerage rate and premium payable file does not have terrorism premium column, we are arriving at brokerage figures by subtracting from the general balance figures
-
-#df_combine['New_brokerage'] = df_combine['PREMIUM']-df_combine['CUR_CLOSING_BALANCE']-df_combine['TPA']-df_combine['Admin_charges']
 
 # fill empty cells in the dataframe with zeros
 # this is done because net premium payable arithmetic is not functioning if the columns have no values
@@ -81,14 +81,10 @@ df_combine.fillna(0, inplace=True)
 
 df_combine['Net Premium Payable'] = df_combine['PREMIUM'] - df_combine['Total brokerage']-df_combine['TPA']-df_combine['Admin_charges']
 
-#df_combine.drop('Unnamed: 0',axis=1,inplace=True)dd
-#df_combine.drop_duplicates(keep=False,inplace=True)
 # deleting all columns starting with "aggrega"
 df_combine.drop(df_combine.filter(regex='Aggrega').columns, axis=1, inplace=True)
 
-# deleting a long list of not useful columns from the dataframe
 
-#df_combine = df_combine.drop(columns=["TXT_RO_CODE","TXT_CO_INS_TYPE","TXT_DATA_TYPE","NUM_REFERENCE_NUMBER","DAT_REFERENCE_DATE","TXT_MASTER_CLAIM_NO","CUR_DEBIT_BALANCE","CUR_CREDIT_BALANCE","CUR_CLOSING_BALANCE","DAT_LOSS_DATE","TXT_NATURE_OF_LOSS","NUM_CLAIM_LOSS_OS","NUM_CLAIM_EXP_OS","DAT_PROCESS_RUN_DATE","NUM_VOUCHER_NO","NUM_PRODUCT_CODE","TXT_LEDGER_ACCOUNT_CD","TXT_LEDGER_ACCOUNT_DESC","TXT_REPORT_GENERAION_OFFICE","TXT_LEADER_POLICY_NO","Unnamed: 0","Business Source","Business Source Code","Business Channel Type","Biz Channel Code","Name","Agt/Brk/Cor_Ag_Code","Address","License Number","Expiry Date","Dep No","Policy No_x","Endorsement No_x","Insured Name","Policy Exp Dt","Premium Amt","Terrsm Loading","Comm Amt","OO CODE","VOUCHER DATE","TPA Code","TPA Name","Policy No_y","Endorsement No_y","Proposer Name","From","To","Policy Type","No of Lives Covered","Own share premium","100% Premium","OwnShare TPA Service Charge","TotalServiceChargeAmount(100%)","STax on TPA Service Charge","Total","CALCULATE_SER_CHARGE","Column Binding","Proposal Number","Voucher Number"])
 
 # deleting some more columns from the dataframe
 df_combine["NUM_VOUCHER_NO"] = '\''+df_combine["NUM_VOUCHER_NO"].astype(str)
@@ -97,11 +93,11 @@ df_combine = df_combine.drop(columns=['TXT_LEADER_COMPANY_CODE','TXT_FOLLOWER_CO
 
 # reordering all the columns in the dataframe
 
-df_combine = df_combine[['TXT_UIIC_OFFICE_CD','COMPANYNAME','TXT_FOLLOWER_OFF_CD','TXT_NAME_OF_INSURED','TXT_DEPARTMENTNAME','TXT_POLICY_NO_CHAR','NUM_ENDT_NO','DAT_POLICY_START_DATE','DAT_POLICY_END_DATE','NUM_VOUCHER_NO','DAT_ACCOUNTING_DATE','NUM_SHARE_PCT','CUR_SUM_INSURED','TXT_URN_CODE','PREMIUM','Rate','Terr brokerage', 'Brokerage except Terrorism','Total brokerage','TPA_Rate','TPA','Admin_charges','Net Premium Payable']]
+df_combine = df_combine[['TXT_UIIC_OFFICE_CD','COMPANYNAME','TXT_FOLLOWER_OFF_CD','TXT_NAME_OF_INSURED','TXT_DEPARTMENTNAME','TXT_POLICY_NO_CHAR','NUM_ENDT_NO','DAT_POLICY_START_DATE','DAT_POLICY_END_DATE','NUM_VOUCHER_NO','DAT_ACCOUNTING_DATE','NUM_SHARE_PCT','CUR_SUM_INSURED','TXT_URN_CODE','PREMIUM','Terrorism Premium','Other than Terrorism Premium','Rate','Terr brokerage', 'Brokerage except Terrorism','Total brokerage','TPA_Rate','TPA','Admin_charges','Net Premium Payable']]
 
 # Renaming the column names in the dataframe
 
-df_combine = df_combine.set_axis(["UIIC Office Code","Name of coinsurer","Follower Office Code","Name of insured","Department","Policy Number","Endorsement number","Policy start date","Policy end date","Voucher number","Accounting date","Percentage of share","Current sum insured","URN Code","Premium","Brokerage rate","Terrorism brokerage","Brokerage except Terrorism", "Total Brokerage amount","TPA Service Charges rate","TPA Service Charges amount","Admin charges (incl. GST)","Net Premium payable"],axis=1,inplace=False)
+df_combine = df_combine.set_axis(["UIIC Office Code","Name of coinsurer","Follower Office Code","Name of insured","Department","Policy Number","Endorsement number","Policy start date","Policy end date","Voucher number","Accounting date","Percentage of share","Current sum insured","URN Code","Premium","Terrorism Premium","Other than Terrorism Premium","Brokerage rate","Terrorism brokerage (5%)","Brokerage except Terrorism", "Total Brokerage amount","TPA Service Charges rate","TPA Service Charges amount","Admin charges (incl. GST)","Net Premium payable"],axis=1,inplace=False)
 
 
 # Converting date format for policy start date, end date and voucher date
