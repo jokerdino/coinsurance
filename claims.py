@@ -18,6 +18,8 @@ df_claims['Policy From'] = pd.to_datetime(df_claims['Policy From'], infer_dateti
 df_claims['Policy Upto'] = pd.to_datetime(df_claims['Policy Upto'], infer_datetime_format=True)
 
 df_claims['COMPANYNAME'] = df_claims['COMPANYNAME'].str.replace(".",'',regex=True)
+df_claims["COMPANYNAME"] = df_claims['COMPANYNAME'].str.rstrip()
+
 
 df_claims['DAT_LOSS_DATE'] = df_claims['DAT_LOSS_DATE'].dt.date
 df_claims['DAT_ACCOUNTING_DATE'] = df_claims['DAT_ACCOUNTING_DATE'].dt.date

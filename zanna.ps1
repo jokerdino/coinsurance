@@ -6,6 +6,8 @@ ForEach ($folder in $folders.name) {
     Copy-Item add.py -Destination $folder
     Copy-Item pivot-table.py -Destination $folder
     cd $folder
+
+    echo $folder "Merging premium payable file and claims receivable file into one single file"
     python3 add.py
     cd -
 } #   NewItem -Name $folder -ItemType -directory
@@ -27,7 +29,7 @@ ForEach ($folder in $folders.name) {
     cd $folder
     Remove-Item *_Premium.xlsx
     Remove-Item *_Claims.xlsx
-    echo $folder
+    echo $folder "Generating summary file"
     python3 pivot-table.py
     cd -
 }

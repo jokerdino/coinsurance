@@ -12,21 +12,39 @@ for f in files:
         excel_file = pd.ExcelFile(f)
         file_name = f
 
-df1 = pd.read_excel(excel_file,'CR')
-df2 = pd.read_excel(excel_file, 'PP')
-
+try:
+    df1 = pd.read_excel(excel_file,'CR')
+except ValueError:
+    df1 = pd.DataFrame()
+    print("There is no claims receivable sheet for this company")
+try:
+    df2 = pd.read_excel(excel_file, 'PP')
+except ValueError:
+    df2 = pd.DataFrame()
+    print("There is no premium payable sheet for this company.")
 pd.set_option('display.float_format', '{:,.2f}'.format)
 
-CR = pd.pivot_table(df1,index='Follower Office Code',values='Total claim amount',aggfunc=np.sum)#,margins=True)
-PP = pd.pivot_table(df2,index='Follower Office Code',values='Net Premium payable',aggfunc=np.sum)#,margins=True)
+if not df1.empty:
+    CR = pd.pivot_table(df1,index='Follower Office Code',values='Total claim amount',aggfunc=np.sum)#,margins=True)
+else:
+    CR = pd.DataFrame()
+if not df2.empty:
+    PP = pd.pivot_table(df2,index='Follower Office Code',values='Net Premium payable',aggfunc=np.sum)#,margins=True)
+else:
+    PP = pd.DataFrame()
 
+if not PP.empty:
+    if not CR.empty:
+        all_pivot = pd.merge(PP,CR,left_index=True,right_index=True,how='outer')
 
-all_pivot = pd.merge(PP,CR,left_index=True,right_index=True,how='outer')
-all_pivot.fillna(0,inplace=True)
+        all_pivot.fillna(0,inplace=True)
+        all_pivot['Net Payable by UIIC'] = all_pivot['Net Premium payable'] - all_pivot['Total claim amount']
+        all_pivot.rename({'Total claim amount': 'Claims receivable'},axis=1,inplace=True)
+    else:
+        all_pivot = PP
+else:
+    all_pivot = CR
 
-all_pivot['Net Payable by UIIC'] = all_pivot['Net Premium payable'] - all_pivot['Total claim amount']
-
-all_pivot.rename({'Total claim amount': 'Claims receivable'},axis=1,inplace=True)
 
 all_pivot.loc['Total']= all_pivot.sum(numeric_only=True,axis=0)
 #pd.set_option('display.float_format','{:.2f}'.format)

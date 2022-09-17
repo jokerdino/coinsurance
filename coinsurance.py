@@ -12,6 +12,7 @@ df_premium_data  = pd.read_csv('premium_data.csv')
 df_premium_data["Policy No."] = df_premium_data["Policy No."].str.replace("#","")
 
 df_1["COMPANYNAME"] = df_1["COMPANYNAME"].str.replace(".","",regex=True)
+df_1["COMPANYNAME"] = df_1["COMPANYNAME"].str.rstrip()
 
 # filling the percentage column with no values with "Deleting" and then identifying the policy numbers which have that values and deleting them
 
