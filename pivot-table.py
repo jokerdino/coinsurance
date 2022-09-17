@@ -16,7 +16,7 @@ try:
     df1 = pd.read_excel(excel_file,'CR')
 except ValueError:
     df1 = pd.DataFrame()
-    print("There is no claims receivable sheet for this company")
+    print("There is no claims receivable sheet for this company.")
 try:
     df2 = pd.read_excel(excel_file, 'PP')
 except ValueError:
