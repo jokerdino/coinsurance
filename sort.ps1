@@ -1,4 +1,4 @@
-echo "creating folder named "doing"..."
+echo "creating folder named doing..."
 New-Item -Name "doing" -ItemType "directory"
 
 echo "Moving all premium payable files and claims receivable files to doing folder..."
