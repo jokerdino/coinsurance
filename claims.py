@@ -10,7 +10,11 @@ df_claims_data = df_claims_data.drop_duplicates(subset=["Policy Number"])
 
 df_claims = df_claims_reports.merge(df_claims_data,left_on=("TXT_POLICY_NO_CHAR"),right_on=("Policy Number"),how="left")
 
-df_claims['Total claim amount'] = df_claims['LOSS_AMOUNT'] + df_claims['EXPENSE_AMOUNT']
+#df_claims['Total claim amount'] = df_claims['LOSS_AMOUNT'] + df_claims['EXPENSE_AMOUNT']
+
+
+df_claims['Total claim amount'] = df_claims['CUR_DEBIT_BALANCE'] - df_claims['CUR_CREDIT_BALANCE']
+
 
 df_claims['DAT_LOSS_DATE'] = pd.to_datetime(df_claims['DAT_LOSS_DATE'], infer_datetime_format=True)
 df_claims['DAT_ACCOUNTING_DATE'] = pd.to_datetime(df_claims['DAT_ACCOUNTING_DATE'], infer_datetime_format=True)
