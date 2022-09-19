@@ -9,7 +9,7 @@ ForEach ($folder in $folders.name) {
 
     echo "Merging premium payable file and claims receivable file of $folder into one single file..."
     python3 add.py
-    cd -
+    cd ..
 } 
 
 # all the combined files created by add.py python script will be saved in "doing" directory
@@ -33,6 +33,6 @@ ForEach ($folder in $folders.name) {
 # time to use the pivot-table script to generate summary file for each company...
     echo "Generating summary file of $folder..."
     python3 pivot-table.py
-    cd -
+    cd ..
 }
    

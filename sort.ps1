@@ -3,13 +3,13 @@ New-Item -Name "doing" -ItemType "directory"
 
 echo "Moving all premium payable files and claims receivable files to doing folder..."
 
-Move-Item -Path * -Filter *_Premium.xlsx -Destination .\doing
-Move-Item -Path * -Filter *_Claims.xlsx -Destination .\doing
+Move-Item -Path .\*_Premium.xlsx -Destination .\doing
+Move-Item -Path .\*_Claims.xlsx -Destination .\doing
 
 
-Set-Location .\doing
+Set-Location doing
 
-$files = Get-ChildItem  -Filter *.xlsx -file;
+$files = Get-ChildItem  -Filter "*.xlsx" -file;
 
 echo "Creating folders for each company..."
 
@@ -30,7 +30,7 @@ foreach($file in $allfiles){
 }
 
 
-cd -
+cd ..
 
 
 Copy-Item add.py -Destination .\doing
