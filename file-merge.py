@@ -1,12 +1,11 @@
-import os
 import pandas as pd
+
+import glob
+import os
+
 cwd = os.path.abspath('')
-files = os.listdir(cwd)
+files = glob.glob(cwd + "/*.csv")
 
-df = pd.DataFrame()
-for file in files:
-    if file.endswith('.csv'):
-        df = df.append(pd.read_csv(file), ignore_index=True)
-#df.head()
+df = pd.concat(map(pd.read_csv,files))
 
-df.to_csv('commission-merge.csv')
+df.to_csv('commission-merge.csv',index=False)
