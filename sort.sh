@@ -21,13 +21,12 @@ for file in * ; do
 done
 cd doing
 
-echo "Creating folders for each company..."
-
-echo "Moving each company specific payable and receivable files to that particular company's folder"
+echo "Creating folders for each company and moving each company specific payable and receivable files to that particular company's folder"
 for file in * ; do
     dirname="${file%%_*}"
     mkdir -p "$dirname" 
-    mv "$dirname"_* "$dirname"
+    mv "$file" "$dirname"
+done
 
 cd ..
 
@@ -36,5 +35,3 @@ cp add.py doing/
 cp pivot-table.py doing/
 
 cd doing
-
-done
