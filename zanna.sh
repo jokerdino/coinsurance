@@ -9,7 +9,7 @@ done
 
 for d in $parentdir/*/ ; do
     cd "$d"/"$(basename "$d")"
-    printf '%s\n' "Merging premium payable file and claim receivable file into one single file...- ${PWD##*/}"
+    printf '%s\n' "Merging premium payable file and claim receivable file into one single file... ${PWD##*/}"
     python3 add.py 
     rm add.py
     cd $parentdir 

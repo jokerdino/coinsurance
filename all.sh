@@ -1,4 +1,4 @@
-echo "Generating premium payabe reports..."
+echo "Generating premium payable reports..."
 python3 coinsurance.py
 
 echo "Generating claims receivable reports..."

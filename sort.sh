@@ -19,22 +19,22 @@ for file in * ; do
         mv "$file" doing/
     fi
 done
-
-cp zanna.sh doing/
-cp add.py doing/
-cp pivot-table.py doing/
-
 cd doing
 
-echo "stage1"
-
 echo "Creating folders for each company..."
-
 
 echo "Moving each company specific payable and receivable files to that particular company's folder"
 for file in * ; do
     dirname="${file%%_*}"
     mkdir -p "$dirname" 
     mv "$dirname"_* "$dirname"
+
+cd ..
+
+cp zanna.sh doing/
+cp add.py doing/
+cp pivot-table.py doing/
+
+cd doing
 
 done
