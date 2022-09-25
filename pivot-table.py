@@ -13,12 +13,12 @@ for f in files:
         file_name = f
 
 try:
-    df1 = pd.read_excel(excel_file,'CR')
+    df1 = pd.read_excel(excel_file,'CR',converters={'Follower Office Code': str})
 except ValueError:
     df1 = pd.DataFrame()
     print("There is no claims receivable sheet for this company.")
 try:
-    df2 = pd.read_excel(excel_file, 'PP')
+    df2 = pd.read_excel(excel_file, 'PP',converters={'Follower Office Code':str})
 except ValueError:
     df2 = pd.DataFrame()
     print("There is no premium payable sheet for this company.")
