@@ -88,7 +88,8 @@ worksheet_1.set_row(0,None,format_header)
 #    worksheet_1.write(0,col,value,format_header)
 
 
-writer_1.save()
+writer_1.close()
+#writer_1.save()
 
 #file_name_new = file_name+"- pivot.xlsx"
 #all_pivot.to_excel(file_name_new)
