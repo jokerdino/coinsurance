@@ -97,7 +97,7 @@ df_combine = df_combine[['TXT_UIIC_OFFICE_CD','COMPANYNAME','TXT_FOLLOWER_OFF_CD
 
 # Renaming the column names in the dataframe
 
-df_combine = df_combine.set_axis(["UIIC Office Code","Name of coinsurer","Follower Office Code","Name of insured","Department","Policy Number","Endorsement number","Policy start date","Policy end date","Voucher number","Accounting date","Percentage of share","Current sum insured","URN Code","Premium","Terrorism Premium","Other than Terrorism Premium","Brokerage rate","Terrorism brokerage (5%)","Brokerage except Terrorism", "Total Brokerage amount","TPA Service Charges rate","TPA Service Charges amount","Admin charges (incl. GST)","Net Premium payable"],axis=1,inplace=False)
+df_combine = df_combine.set_axis(["UIIC Office Code","Name of coinsurer","Follower Office Code","Name of insured","Department","Policy Number","Endorsement number","Policy start date","Policy end date","Voucher number","Accounting date","Percentage of share","Current sum insured","URN Code","Premium","Terrorism Premium","Other than Terrorism Premium","Brokerage rate","Terrorism brokerage (5%)","Brokerage except Terrorism", "Total Brokerage amount","TPA Service Charges rate","TPA Service Charges amount","Admin charges (incl. GST)","Net Premium payable"],axis=1,copy=False)
 
 
 # Converting date format for policy start date, end date and voucher date
