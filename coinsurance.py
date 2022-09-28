@@ -4,6 +4,8 @@ import pandas as pd
 # reading files from the saved directory and saving it into pandas dataframe
 
 df_1 = pd.read_csv('premium-payable.csv',converters={'TXT_FOLLOWER_OFF_CD':str})
+
+df_1["COMPANYNAME"] = df_1["COMPANYNAME"].astype('category')
 df_2 = pd.read_csv('commission-merge.csv')
 df_3 = pd.read_csv('tpa-register.csv')
 df_premium_data  = pd.read_csv('premium_data.csv')

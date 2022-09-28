@@ -1,6 +1,8 @@
 import pandas as pd
 
 df_claims_reports = pd.read_csv('claims-receivable.csv',converters={'TXT_LEADER_OFFICE_CODE':str})
+df_claims_reports["COMPANYNAME"] = df_claims_reports["COMPANYNAME"].astype('category')
+
 df_claims_data = pd.read_csv('claims_data.csv')
 
 df_claims_data["Policy Number"] = df_claims_data["Policy Number"].str.replace("#","")
