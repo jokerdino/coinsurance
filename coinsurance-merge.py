@@ -9,11 +9,16 @@ output_premium = pd.DataFrame()
 output_claims = pd.DataFrame()
 
 for file in filenames:
-    df_premium = pd.read_excel(file, sheet_name = "PP")
-    output_premium = pd.concat([output_premium, df_premium])
-
-    df_claims = pd.read_excel(file, sheet_name = "CR")
-    output_claims = pd.concat([output_claims, df_claims])
+    try:
+        df_premium = pd.read_excel(file, sheet_name = "PP")
+        output_premium = pd.concat([output_premium, df_premium])
+    except ValueError as e:
+        print("No PP")
+    try:
+        df_claims = pd.read_excel(file, sheet_name = "CR")
+        output_claims = pd.concat([output_claims, df_claims])
+    except ValueError as e:
+        print("No CR")
 
 with pd.ExcelWriter("File_merge.xlsx") as writer:
     output_premium.sort_values('Accounting date').to_excel(writer, sheet_name="PP", index=False)
