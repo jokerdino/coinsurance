@@ -30,7 +30,7 @@ Currently, we need to download two reports from GC Core to prepare coinsurance s
 
 1. The admin charges calculated by the reports does not consider the GST (at the rate of 18%) to be charged on admin charges.
 2. Whererever terrorism premium is involved, the reports should provide breakup of the same. Preferably, total premium along with terrorism premium and other than terrorism premium should be present in all entries irrespective of the nature of the policy.
-3. Brokerage rate is not explicitly mentioned in the reports. This makes it 
+3. Brokerage rate is not explicitly mentioned in the reports. We have to check brokerage rate of each policy and calculate the appropriate brokerage to be recovered from the follower. 
 4. TPA Service charges rate is not explicitly mentioned in the reports.
 
 ## Other general improvements
@@ -90,15 +90,15 @@ After downloading the installer, select "Add path" checkbox before proceeding fu
 
 ## Step 5.1: Download the reports from Dashboard
 
-1. Log in to dashboard through "Mypage login" and download the UW reports under underwriting menu. Save the file as `premium_data`.
-2. From the same dashboard, save the claims report under claims menu and save that file as `claims_data`.
+1. Log in to dashboard through "Mypage login" and download the UW reports under underwriting menu. Save the file as `premium_data.csv`.
+2. From the same dashboard, save the claims report under claims menu and save that file as `claims_data.csv`.
 
 ## Step 5.2: Download reports from GC Reports
 
-1. From Reports1 role in GC Core, download Monthly commission billl for the period you want to prepare the statements. Save this file as `commission-merge`.
-2. In the reports role, download the TPA service charges register and save it as `tpa-register`.
-3. In reports role, download claims receivable register and save it as `claims-receivable`.
-4. In reports role, download the premium payable register and save it as `premium-payable`.
+1. From Reports1 role in GC Core, download Monthly commission billl for the period you want to prepare the statements. Save this file as `commission-merge.csv`.
+2. In the reports role, download the TPA service charges register and save it as `tpa-register.csv`.
+3. In reports role, download claims receivable register and save it as `claims-receivable.csv`.
+4. In reports role, download the premium payable register and save it as `premium-payable.csv`.
 
 # How to use the script
 
@@ -139,6 +139,7 @@ The above pointers are not exhaustive and the discrepancy between the settlement
 
 # Making statements for multiple months at one go
 
+*To be written*
 
 
 # Generating statements for a different period in the future

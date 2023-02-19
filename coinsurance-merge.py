@@ -10,12 +10,13 @@ output_claims = pd.DataFrame()
 
 for file in filenames:
     try:
-        df_premium = pd.read_excel(file, sheet_name = "PP")
+        df_premium = pd.read_excel(file, sheet_name = "PP", converters={'Follower Office Code':str})
+
         output_premium = pd.concat([output_premium, df_premium])
     except ValueError as e:
         print("No PP")
     try:
-        df_claims = pd.read_excel(file, sheet_name = "CR")
+        df_claims = pd.read_excel(file, sheet_name = "CR", converters={'Follower Office Code':str})
         output_claims = pd.concat([output_claims, df_claims])
     except ValueError as e:
         print("No CR")
