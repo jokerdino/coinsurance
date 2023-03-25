@@ -1,0 +1,23 @@
+# rename excel files based on month/folder origin
+
+shopt -s globstar
+rename 's/.xlsx/_Dec-22.xlsx/' **/*
+shopt -s globstar
+
+
+---------
+
+
+
+# find all excel files given search command and move it to another folder for further processing
+
+fdfind -t f ROYAL -e xlsx -E trash -E '*_Claims*.xlsx' -E '*_Premium*.xlsx' -E coinsurance-backup -0 | xargs -0 -p -n 1 cp -t tata-aig/
+
+
+
+1. Append month names to excel files
+2. Create a new folder for the purpose of storing the files
+3. Copy all excel files of a given company and move it to a folder already created for the purpose. Interactive choice to copy or not to copy.
+4. Run the coinsurance-merge python script to merge the above copied files into a single file.
+5. Run the pivot-table python script to create a summary file.
+6. pivot table python script takes an arguement. By default, the pivot table script will provide data in "net payable by UIIC". If the receivable amount is more, you can supply any argument and the script will switch the data to "net receivable by UIIC" format.
