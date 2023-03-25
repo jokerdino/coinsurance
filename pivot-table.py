@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import os
+import sys
+
+if len(sys.argv) > 1:
+    bool_receivable = True
 
 cwd = os.path.abspath('')
 files = os.listdir(cwd)
@@ -38,7 +42,12 @@ if not PP.empty:
         all_pivot = pd.merge(PP,CR,left_index=True,right_index=True,how='outer')
 
         all_pivot.fillna(0,inplace=True)
-        all_pivot['Net Payable by UIIC'] = all_pivot['Net Premium payable'] - all_pivot['Total claim amount']
+        if len(sys.argv) > 1:
+            all_pivot['Net Receivable by UIIC'] = all_pivot['Total claim amount'] - all_pivot['Net Premium payable']
+            all_pivot.style.format({'Net Receivable by UIIC':'{0:,.2f}'})
+        else:
+            all_pivot['Net Payable by UIIC'] = all_pivot['Net Premium payable'] - all_pivot['Total claim amount']
+            all_pivot.style.format({'Net Payable by UIIC':'{0:,.2f}'})
         all_pivot.rename({'Total claim amount': 'Claims receivable'},axis=1,inplace=True)
     else:
         all_pivot = PP
@@ -49,7 +58,7 @@ else:
 all_pivot.loc['Total']= all_pivot.sum(numeric_only=True,axis=0)
 #pd.set_option('display.float_format','{:.2f}'.format)
 
-all_pivot.style.format({'Net Payable by UIIC':'{0:,.2f}'})
+#all_pivot.style.format({'Net Payable by UIIC':'{0:,.2f}'})
 
 print(all_pivot)
 #all_pivot.style.format({'Net Payable by UIIC':'${0:,.0f}'})
