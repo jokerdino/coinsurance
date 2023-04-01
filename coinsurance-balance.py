@@ -12,7 +12,6 @@ gl_balance = pd.read_csv("UIIC - ICR - Client.csv")
 gl_balance.columns = gl_balance.columns.str.replace(' ','_')
 
 coinsurance = gl_balance[gl_balance.GL_Desc.str.contains('CO-INS')]
-
 coinsurance.loc[coinsurance['GL_Desc'].str.contains('DUE TO'), 'Type'] = 'Due to'
 coinsurance.loc[coinsurance['GL_Desc'].str.contains('DUE FROM'), 'Type'] = 'Due from'
 
@@ -24,9 +23,8 @@ coinsurance['GL_Desc'] = coinsurance['GL_Desc'].str.replace(r"^.*CO-INS ","",reg
 coinsurance['GL_Desc'] = coinsurance['GL_Desc'].str.replace(r"Insurance.*","",regex=True)
 
 table = pd.pivot_table(coinsurance, values = 'Net', index=['GL_Desc'], columns='Type')
-
+table.replace(np.nan, 0, inplace=True)
 table["Net payable"] = table['Due to'] - table['Due from']
-table = table.dropna()
 table = table[table['Net payable']!=0]
 table.loc['Total']= table.sum(numeric_only=True,axis=0)
 
