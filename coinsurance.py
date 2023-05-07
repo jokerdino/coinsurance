@@ -13,7 +13,7 @@ df_premium_data  = pd.read_csv('premium_data.csv')
 # deleting the # character from the Policy no. column
 df_premium_data["Policy No."] = df_premium_data["Policy No."].str.replace("#","")
 
-df_1["COMPANYNAME"] = df_1["COMPANYNAME"].str.replace(".","",regex=True)
+df_1["COMPANYNAME"] = df_1["COMPANYNAME"].str.replace(".","")
 df_1["COMPANYNAME"] = df_1["COMPANYNAME"].str.rstrip()
 
 # filling the percentage column with no values with "Deleting" and then identifying the policy numbers which have that values and deleting them
@@ -40,9 +40,9 @@ for i in list_policy:
 #df_premium_data.rename({"End. S.No." : "Endorsement No"}, inplace=True)
 
 # converting the accounting date column and transaction date column to datetime format
-df_1['DAT_ACCOUNTING_DATE'] = pd.to_datetime(df_1['DAT_ACCOUNTING_DATE'], infer_datetime_format=True)
+df_1['DAT_ACCOUNTING_DATE'] = pd.to_datetime(df_1['DAT_ACCOUNTING_DATE'], format="mixed")
 
-df_premium_data['Trn Date'] = pd.to_datetime(df_premium_data['Trn Date'], infer_datetime_format=True)
+df_premium_data['Trn Date'] = pd.to_datetime(df_premium_data['Trn Date'])
 
 # merging the four dataframes based on policy numbers, endorsement numbers and accounting date
 df_combine = df_1.merge(df_premium_data,left_on=("TXT_POLICY_NO_CHAR","NUM_ENDT_NO","DAT_ACCOUNTING_DATE"),right_on=("Policy No.","End. S.No.","Trn Date"),how="left")
@@ -104,13 +104,9 @@ df_combine = df_combine.set_axis(["UIIC Office Code","Name of coinsurer","Follow
 
 # Converting date format for policy start date, end date and voucher date
 
-df_combine['Policy start date'] = pd.to_datetime(df_combine['Policy start date'], infer_datetime_format=True)
-df_combine['Policy end date'] = pd.to_datetime(df_combine['Policy end date'], infer_datetime_format=True)
-df_combine['Accounting date'] = pd.to_datetime(df_combine['Accounting date'], infer_datetime_format=True)
-
-df_combine['Policy start date'] = df_combine['Policy start date'].dt.date
-df_combine['Policy end date'] = df_combine['Policy end date'].dt.date
-df_combine['Accounting date'] = df_combine['Accounting date'].dt.date
+df_combine['Policy start date'] = pd.to_datetime(df_combine['Policy start date'], format="mixed")
+df_combine['Policy end date'] = pd.to_datetime(df_combine['Policy end date'], format="mixed")
+df_combine['Accounting date'] = pd.to_datetime(df_combine['Accounting date'], format="mixed")
 
 #df_combine['Policy start date'] = df_combine['Policy start date'].dt.strftime("%d/%m/%Y")
 

@@ -18,19 +18,13 @@ df_claims = df_claims_reports.merge(df_claims_data,left_on=("TXT_POLICY_NO_CHAR"
 df_claims['Total claim amount'] = df_claims['CUR_DEBIT_BALANCE'] - df_claims['CUR_CREDIT_BALANCE']
 
 
-df_claims['DAT_LOSS_DATE'] = pd.to_datetime(df_claims['DAT_LOSS_DATE'], infer_datetime_format=True)
-df_claims['DAT_ACCOUNTING_DATE'] = pd.to_datetime(df_claims['DAT_ACCOUNTING_DATE'], infer_datetime_format=True)
-df_claims['Policy From'] = pd.to_datetime(df_claims['Policy From'], infer_datetime_format=True)
-df_claims['Policy Upto'] = pd.to_datetime(df_claims['Policy Upto'], infer_datetime_format=True)
+df_claims['DAT_LOSS_DATE'] = pd.to_datetime(df_claims['DAT_LOSS_DATE'])
+df_claims['DAT_ACCOUNTING_DATE'] = pd.to_datetime(df_claims['DAT_ACCOUNTING_DATE'], format="mixed")
+df_claims['Policy From'] = pd.to_datetime(df_claims['Policy From'])
+df_claims['Policy Upto'] = pd.to_datetime(df_claims['Policy Upto'])
 
-df_claims['COMPANYNAME'] = df_claims['COMPANYNAME'].str.replace(".",'',regex=True)
+df_claims['COMPANYNAME'] = df_claims['COMPANYNAME'].str.replace(".",'')
 df_claims["COMPANYNAME"] = df_claims['COMPANYNAME'].str.rstrip()
-
-
-df_claims['DAT_LOSS_DATE'] = df_claims['DAT_LOSS_DATE'].dt.date
-df_claims['DAT_ACCOUNTING_DATE'] = df_claims['DAT_ACCOUNTING_DATE'].dt.date
-df_claims['Policy From'] = df_claims['Policy From'].dt.date
-df_claims['Policy Upto'] = df_claims['Policy Upto'].dt.date
 
 df_claims = df_claims[['TXT_UIIC_OFF_CODE','COMPANYNAME','TXT_LEADER_OFFICE_CODE','Customer Name','TXT_DEPARTMENTNAME','TXT_POLICY_NO_CHAR','Policy From','Policy Upto','NUM_SHARE_PCT','TXT_MASTER_CLAIM_NO','DAT_LOSS_DATE','TXT_NATURE_OF_LOSS','Total claim amount','NUM_VOUCHER_NO','DAT_ACCOUNTING_DATE','TXT_URN_CODE']]
 
